@@ -1,0 +1,121 @@
+/* Global Styles */
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #6366f1;
+  --bg-color: #f3f4f6;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --border-radius: 12px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    background: #111827; /* Dark Gray */
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white !important;
+    letter-spacing: -0.5px;
+}
+
+/* Main Container */
+.main-container {
+    flex: 1;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+/* Typography */
+h1 {
+    color: #111827;
+    letter-spacing: -1px;
+}
+
+/* Card Styling */
+.upload-card {
+    border-radius: var(--border-radius);
+    background: var(--card-bg);
+}
+
+/* Drop Zone Styles */
+.drop-zone {
+  width: 100%;
+  height: 200px;
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-muted);
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  background-color: #f8fafc;
+  transition: all 0.3s ease;
+}
+
+.drop-zone:hover {
+    border-color: var(--primary-color);
+    background-color: #eef2ff;
+}
+
+.drop-zone--over {
+  border-style: solid;
+  background-color: #e0e7ff;
+}
+
+.drop-zone-input {
+  display: none;
+}
+
+.drop-zone-prompt {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.drop-zone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.hover-scale:active {
+    transform: translateY(0);
+}
+
+/* Footer */
+.footer {
+    padding: 1rem 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    margin-top: auto;
+}

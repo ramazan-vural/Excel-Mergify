@@ -1,0 +1,31 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Hata";
+}
+
+<div class="container py-5 text-center">
+    <div class="card shadow-lg border-danger" style="max-width: 600px; margin: 0 auto;">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0"><i class="bi bi-exclamation-octagon-fill me-2"></i>Bir Hata Oluştu</h4>
+        </div>
+        <div class="card-body p-5">
+            <h2 class="text-danger mb-4">Üzgünüz, işleminiz gerçekleştirilemedi.</h2>
+            <p class="lead text-muted mb-4">
+                İsteğinizi işlerken beklenmedik bir sorunla karşılaştık. Lütfen daha sonra tekrar deneyiniz.
+            </p>
+
+            @if (Model.ShowRequestId)
+            {
+                <div class="alert alert-warning d-inline-block">
+                    <strong>Destek Kodu (Request ID):</strong> <code>@Model.RequestId</code>
+                </div>
+            }
+
+            <div class="mt-4">
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-danger btn-lg px-4 rounded-pill">
+                    <i class="bi bi-arrow-left me-2"></i>Ana Sayfaya Dön
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

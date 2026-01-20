@@ -1,0 +1,20 @@
+# Visual Studio
+.vs/
+[Bb]in/
+[Oo]bj/
+*.suo
+*.user
+
+# ASP.NET Core
+appsettings.Development.json
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# Excel output
+wwwroot/excel/Result.xlsx

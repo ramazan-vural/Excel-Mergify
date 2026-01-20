@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Dosya Birleştirme";
+}
+
+<div class="hero-section text-center">
+    <h1 class="display-4 fw-bold mb-3">Excel Dosyalarını Birleştirin</h1>
+    <p class="lead text-secondary mb-5">Ana veri dosyanız ile referans dosyanızı yükleyin, eşleşen kayıtları saniyeler
+        içinde raporlayalım.</p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card upload-card shadow-lg border-0">
+            <div class="card-body p-5">
+
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger d-flex align-items-center mb-4" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"></i>
+                        <div>
+                            @TempData["Error"]
+                        </div>
+                    </div>
+                }
+
+                <form asp-action="ProcessFiles" asp-controller="Home" method="post" enctype="multipart/form-data"
+                    id="uploadForm">
+                    <div class="row g-4">
+                        <!-- Main File Upload -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Ana Dosya (Kaynak)</label>
+                            <label class="drop-zone" for="mainFile">
+                                <div class="drop-zone-content">
+                                    <i class="bi bi-cloud-arrow-up display-4 text-primary mb-3"></i>
+                                    <span class="drop-zone-prompt">Dosyayı buraya sürükleyin veya tıklayın</span>
+                                    <span class="file-name mt-2 text-success fw-bold"></span>
+                                </div>
+                                <input type="file" name="mainFile" id="mainFile" class="drop-zone-input" accept=".xlsx"
+                                    required>
+                            </label>
+                            <small class="text-muted d-block mt-2">İçinde veri aranacak dosya (G Sütunu kontrol
+                                edilir)</small>
+                        </div>
+
+                        <!-- Match File Upload -->
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Referans Dosya (Eşleşme)</label>
+                            <label class="drop-zone" for="matchFile">
+                                <div class="drop-zone-content">
+                                    <i class="bi bi-file-earmark-check display-4 text-info mb-3"></i>
+                                    <span class="drop-zone-prompt">Dosyayı buraya sürükleyin veya tıklayın</span>
+                                    <span class="file-name mt-2 text-success fw-bold"></span>
+                                </div>
+                                <input type="file" name="matchFile" id="matchFile" class="drop-zone-input"
+                                    accept=".xlsx" required>
+                            </label>
+                            <small class="text-muted d-block mt-2">Referans kodlarını içeren dosya (A Sütunu)</small>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <button type="submit"
+                            class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-sm hover-scale" id="submitBtn">
+                            <i class="bi bi-gear-fill me-2"></i> İşlemi Başlat
+                        </button>
+                        <div id="loadingIndicator" class="mt-3 d-none">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span class="ms-2">Dosyalar işleniyor, lütfen bekleyin...</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll(".drop-zone-input").forEach((inputElement) => {
+            const dropZoneElement = inputElement.closest(".drop-zone");
+
+            dropZoneElement.addEventListener("click", (e) => {
+                inputElement.click();
+            });
+
+            inputElement.addEventListener("change", (e) => {
+                if (inputElement.files.length) {
+                    updateThumbnail(dropZoneElement, inputElement.files[0]);
+                }
+            });
+
+            dropZoneElement.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                dropZoneElement.classList.add("drop-zone--over");
+            });
+
+            ["dragleave", "dragend"].forEach((type) => {
+                dropZoneElement.addEventListener(type, (e) => {
+                    dropZoneElement.classList.remove("drop-zone--over");
+                });
+            });
+
+            dropZoneElement.addEventListener("drop", (e) => {
+                e.preventDefault();
+                if (e.dataTransfer.files.length) {
+                    inputElement.files = e.dataTransfer.files;
+                    updateThumbnail(dropZoneElement, e.dataTransfer.files[0]);
+                }
+                dropZoneElement.classList.remove("drop-zone--over");
+            });
+        });
+
+        function updateThumbnail(dropZoneElement, file) {
+            let promptElement = dropZoneElement.querySelector(".drop-zone-prompt");
+            let fileNameElement = dropZoneElement.querySelector(".file-name");
+
+            // promptElement.style.display = "none";
+            fileNameElement.textContent = file.name;
+        }
+
+        // Form submit animation
+        document.getElementById("uploadForm").addEventListener("submit", function () {
+            document.getElementById("submitBtn").classList.add("d-none");
+            document.getElementById("loadingIndicator").classList.remove("d-none");
+        });
+    </script>
+}
